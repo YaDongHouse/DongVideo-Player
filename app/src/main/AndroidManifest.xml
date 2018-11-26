@@ -27,6 +27,13 @@
             android:screenOrientation="portrait">
 
         </activity>
+        <activity
+            android:name=".ui.window.WindowVideoViewActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.window.FloatWindowActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

@@ -81,6 +81,10 @@ public class BaseVideoViewActivity extends AppCompatActivity implements OnPlayer
         mVideoView.setOnPlayerEventListener(this);
     }
 
+    /**
+     * 控制VideoView的大小，实现横屏是视频全屏 竖屏时显示下方的控制列表
+     * @param landscape
+     */
     private void updateVideo(boolean landscape){
         RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) mVideoView.getLayoutParams();
         if (landscape){

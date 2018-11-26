@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.dong.video.ui.BaseVideoViewActivity;
+import com.dong.video.ui.window.FloatWindowActivity;
 import com.dong.video.ui.window.WindowVideoViewActivity;
 import com.kk.taurus.playerbase.config.PlayerConfig;
 import com.kk.taurus.playerbase.entity.DecoderPlan;
@@ -82,7 +83,7 @@ public class FirstActivity extends AppCompatActivity implements View.OnClickList
     }
 
     public void useFloatWindow(View view){
-//        intentTo(FloatWindowActivity.class);
+        intentTo(FloatWindowActivity.class);
     }
 
     public void viewPagerPlay(View view){

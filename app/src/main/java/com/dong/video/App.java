@@ -88,6 +88,7 @@ public class App extends Application {
                 filePrinter);
 
 
+
         PlayerConfig.addDecoderPlan(new DecoderPlan(PLAN_ID_IJK, IjkPlayer.class.getName(), "IjkPlayer"));
         PlayerConfig.addDecoderPlan(new DecoderPlan(PLAN_ID_EXO, ExoMediaPlayer.class.getName(), "ExoPlayer"));
         PlayerConfig.setDefaultPlanId(PLAN_ID_IJK);

@@ -11,7 +11,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 
 import com.dong.video.R;
-import com.dong.video.cover.CloseCover;
+import com.dong.video.dCover.DCloseCover;
 import com.dong.video.play.DataInter;
 import com.dong.video.play.ReceiverGroupManager;
 import com.dong.video.utils.WindowPermissionCheck;
@@ -64,7 +64,7 @@ public class WindowVideoViewActivity extends AppCompatActivity {
         mWindowVideoView.setEventHandler(eventHandler);
 
         ReceiverGroup receiverGroup = ReceiverGroupManager.getInstance().getLiteReceiverGroup(this);
-        receiverGroup.addReceiver(DataInter.ReceiverKey.KEY_CLOSE_COVER,new CloseCover(this));
+        receiverGroup.addReceiver(DataInter.ReceiverKey.KEY_CLOSE_COVER,new DCloseCover(this));
         receiverGroup.getGroupValue().putBoolean(DataInter.Key.KEY_NETWORK_RESOURCE,true);
         receiverGroup.getGroupValue().putBoolean(DataInter.Key.KEY_CONTROLLER_TOP_ENABLE,false);
         receiverGroup.getGroupValue().putBoolean(DataInter.Key.KEY_CONTROLLER_SCREEN_SWITCH_ENABLE,false);

@@ -1,6 +1,5 @@
 package com.dong.video.ui;
 
-import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Build;
@@ -19,7 +18,7 @@ import com.dong.video.R;
 import com.dong.video.adapter.OnItemClickListener;
 import com.dong.video.adapter.SettingAdapter;
 import com.dong.video.bean.SettingItem;
-import com.dong.video.cover.ControllerCover;
+import com.dong.video.dCover.DControllerCover;
 import com.dong.video.play.DataInter;
 import com.dong.video.play.ReceiverGroupManager;
 import com.dong.video.utils.PUtil;
@@ -221,7 +220,7 @@ public class BaseVideoViewActivity extends AppCompatActivity implements OnPlayer
             case SettingItem.CODE_CONTROLLER_RESET:
                 IReceiver receiver = mReceiverGroup.getReceiver(DataInter.ReceiverKey.KEY_CONTROLLER_COVER);
                 if(receiver==null){
-                    mReceiverGroup.addReceiver(DataInter.ReceiverKey.KEY_CONTROLLER_COVER, new ControllerCover(this));
+                    mReceiverGroup.addReceiver(DataInter.ReceiverKey.KEY_CONTROLLER_COVER, new DControllerCover(this));
                     Toast.makeText(this, "已添加", Toast.LENGTH_SHORT).show();
                 }
                 break;

@@ -2,8 +2,6 @@ package com.dong.video.play;
 
 import android.content.Context;
 
-import com.dong.video.cover.CompleteCover;
-import com.dong.video.cover.ErrorCover;
 import com.dong.video.dCover.DCompleteCover;
 import com.dong.video.dCover.DControllerCover;
 import com.dong.video.dCover.DErrorCover;
@@ -51,8 +49,8 @@ public class ReceiverGroupManager {
     public ReceiverGroup getLittleReceiverGroup(Context context, GroupValue groupValue){
         ReceiverGroup receiverGroup = new ReceiverGroup(groupValue);
         receiverGroup.addReceiver(KEY_LOADING_COVER, new DLoadingCover(context));
-        receiverGroup.addReceiver(KEY_COMPLETE_COVER, new CompleteCover(context));
-        receiverGroup.addReceiver(KEY_ERROR_COVER, new ErrorCover(context));
+        receiverGroup.addReceiver(KEY_COMPLETE_COVER, new DCompleteCover(context));
+        receiverGroup.addReceiver(KEY_ERROR_COVER, new DErrorCover(context));
         return receiverGroup;
     }
 

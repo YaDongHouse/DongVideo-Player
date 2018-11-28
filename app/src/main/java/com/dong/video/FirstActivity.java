@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.dong.video.ui.BaseVideoViewActivity;
+import com.dong.video.ui.listplay.ListPlayActivity;
 import com.dong.video.ui.viewPager.ViewPagerPlayActivity;
 import com.dong.video.ui.window.FloatWindowActivity;
 import com.dong.video.ui.window.WindowVideoViewActivity;
@@ -92,7 +93,7 @@ public class FirstActivity extends AppCompatActivity implements View.OnClickList
     }
 
     public void singleListPlay(View view){
-//        intentTo(ListPlayActivity.class);
+        intentTo(ListPlayActivity.class);
     }
 
     public void multiListPlay(View view){

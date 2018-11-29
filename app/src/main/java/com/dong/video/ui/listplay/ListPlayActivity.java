@@ -8,7 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 
@@ -23,8 +23,6 @@ import com.dong.video.ui.DataUtils;
 import com.dong.video.utils.OrientationSensor;
 import com.kk.taurus.playerbase.entity.DataSource;
 import com.kk.taurus.playerbase.player.IPlayer;
-
-import java.util.List;
 
 /**
  * @author yadong.qiu
@@ -45,10 +43,15 @@ public class ListPlayActivity extends AppCompatActivity implements ListAdapter.O
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        if (getSupportActionBar()!=null) {
+            getSupportActionBar().hide();
+        }
+        if (getActionBar()!=null) {
+            getActionBar().hide();
+        }
+        //隐藏用于显示信号/网络/事件/电量的状态栏
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN
-                , WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_list);
         mRecycler = findViewById(R.id.recycler);
         mPlayerContainer = findViewById(R.id.listPlayContainer);
@@ -56,7 +59,7 @@ public class ListPlayActivity extends AppCompatActivity implements ListAdapter.O
         mAdapter = new ListAdapter(this, DataUtils.getVideoList(), mRecycler);
         mAdapter.setOnListListener(this);
         mRecycler.setAdapter(mAdapter);
-
+        //利用加速度传感器 计算横竖屏
         mOrientationSensor = new OrientationSensor(this, onOrientationListener);
         mOrientationSensor.enable();
 
@@ -69,7 +72,6 @@ public class ListPlayActivity extends AppCompatActivity implements ListAdapter.O
                 @Override
                 public void onLandScape(int orientation) {
                     if (ListPlayer.get().isInPlaybackState()) {
-                        Log.d(TAG, "onLandScape:执行了 ");
                         setRequestedOrientation(orientation);
                     }
                 }
@@ -77,13 +79,15 @@ public class ListPlayActivity extends AppCompatActivity implements ListAdapter.O
                 @Override
                 public void onPortrait(int orientation) {
                     if (ListPlayer.get().isInPlaybackState()) {
-                        Log.d(TAG, "onPortrait:执行了 ");
                         setRequestedOrientation(orientation);
                     }
                 }
             };
 
 
+    /**
+     * 手动横竖屏切换
+     */
     private void toggleScreen() {
         setRequestedOrientation(isLandScape ?
                 ActivityInfo.SCREEN_ORIENTATION_PORTRAIT :
@@ -94,30 +98,28 @@ public class ListPlayActivity extends AppCompatActivity implements ListAdapter.O
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        Log.d(TAG, "onConfigurationChanged:执行了 "+newConfig.orientation);
         isLandScape = newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE;
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE){
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             mPlayerContainer.setBackgroundColor(Color.BLACK);
-            ListPlayer.get().attachContainer(mPlayerContainer,false);
-            ListPlayer.get().setReceiverConfigState(this,ISPayer.RECEIVER_GROUP_CONFIG_FULL_SCREEN_STATE);
-        }else {
+            ListPlayer.get().attachContainer(mPlayerContainer, false);
+            ListPlayer.get().setReceiverConfigState(this, ISPayer.RECEIVER_GROUP_CONFIG_FULL_SCREEN_STATE);
+        } else {
             mPlayerContainer.setBackgroundColor(Color.TRANSPARENT);
             mRecycler.post(new Runnable() {
                 @Override
                 public void run() {
                     ListAdapter.VideoItemHolder currentHolder = mAdapter.getCurrentHolder();
-                    if (currentHolder!=null){
-                        ListPlayer.get().attachContainer(currentHolder.layoutContainer,false);
-                        ListPlayer.get().setReceiverConfigState(ListPlayActivity.this,ISPayer.RECEIVER_GROUP_CONFIG_LIST_STATE);
+                    if (currentHolder != null) {
+                        ListPlayer.get().attachContainer(currentHolder.layoutContainer, false);
+                        ListPlayer.get().setReceiverConfigState(ListPlayActivity.this, ISPayer.RECEIVER_GROUP_CONFIG_LIST_STATE);
                     }
                 }
             });
-            ListPlayer.get().updateGroupValue(DataInter.Key.KEY_CONTROLLER_TOP_ENABLE,isLandScape);
-            ListPlayer.get().updateGroupValue(DataInter.Key.KEY_IS_LANDSCAPE,isLandScape);
         }
-
-
-
+        //更新共享事件 控制页面是否显示头部
+        ListPlayer.get().updateGroupValue(DataInter.Key.KEY_CONTROLLER_TOP_ENABLE, isLandScape);
+        //更新共享事件，是否横竖屏展示
+        ListPlayer.get().updateGroupValue(DataInter.Key.KEY_IS_LANDSCAPE, isLandScape);
     }
 
     @Override

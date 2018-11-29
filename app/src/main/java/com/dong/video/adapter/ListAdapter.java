@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -20,10 +19,7 @@ import com.dong.video.R;
 import com.dong.video.bean.VideoBean;
 import com.dong.video.play.ListPlayer;
 import com.dong.video.utils.PUtil;
-import com.jiajunhui.xapp.medialoader.bean.VideoItem;
-import com.kk.taurus.playerbase.log.PLog;
 
-import java.security.PublicKey;
 import java.util.List;
 
 /**
@@ -179,7 +175,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.VideoItemHolde
             holder.albumLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (mPlayPosition > 0) {
+                    if (mPlayPosition >= 0) {
                         notifyItemChanged(mPlayPosition);
                     }
                     holder.playIcon.setVisibility(View.GONE);
@@ -203,6 +199,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.VideoItemHolde
     private void updateWH(ListAdapter.VideoItemHolder holder) {
         ViewGroup.LayoutParams layoutParams = holder.layoutBox.getLayoutParams();
         layoutParams.width = mScreenUseW;
+        //这里是按照视频宽高比 为9/16定一个控件宽高
         layoutParams.height = mScreenUseW * 9 / 16;
         holder.layoutBox.setLayoutParams(layoutParams);
     }

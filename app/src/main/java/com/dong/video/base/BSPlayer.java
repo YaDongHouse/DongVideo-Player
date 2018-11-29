@@ -7,8 +7,6 @@ import com.kk.taurus.playerbase.assist.RelationAssist;
 import com.kk.taurus.playerbase.entity.DataSource;
 import com.kk.taurus.playerbase.event.OnErrorEventListener;
 import com.kk.taurus.playerbase.event.OnPlayerEventListener;
-import com.kk.taurus.playerbase.log.PLog;
-import com.kk.taurus.playerbase.player.IPlayer;
 import com.kk.taurus.playerbase.provider.IDataProvider;
 import com.kk.taurus.playerbase.receiver.GroupValue;
 import com.kk.taurus.playerbase.receiver.IReceiver;
@@ -129,9 +127,14 @@ public abstract class BSPlayer implements ISPayer {
     @Override
     public void addReceiver(String key, IReceiver receiver) {
         IReceiverGroup receiverGroup = getReceiverGroup();
-        if (receiverGroup != null) {
-            receiverGroup.addReceiver(key, receiver);
+        if (receiverGroup == null){
+            return;
         }
+        IReceiver iReceiver = receiverGroup.getReceiver(key);
+        if (iReceiver == null){
+            return;
+        }
+        receiverGroup.addReceiver(key, receiver);
     }
 
     @Override

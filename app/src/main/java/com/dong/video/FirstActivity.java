@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.dong.video.ui.BaseVideoViewActivity;
 import com.dong.video.ui.listplay.ListPlayActivity;
+import com.dong.video.ui.listplay.MultiListActivity;
 import com.dong.video.ui.viewPager.ViewPagerPlayActivity;
 import com.dong.video.ui.window.FloatWindowActivity;
 import com.dong.video.ui.window.WindowVideoViewActivity;
@@ -97,7 +98,7 @@ public class FirstActivity extends AppCompatActivity implements View.OnClickList
     }
 
     public void multiListPlay(View view){
-//        intentTo(MultiListActivity.class);
+        intentTo(MultiListActivity.class);
     }
 
     public void shareAnimationVideos(View view){
